@@ -114,6 +114,10 @@ def main(stdscr):
       stdscr.addstr(line_num, 0, '? ')
       selection = stdscr.getkey()
 
+      while selection not in ['1', '2', '3', '4', 'q', 'quit']:
+        selection = stdscr.getkey()
+
+
       # Clear screen
       stdscr.clear()
       stdscr.refresh()
@@ -122,23 +126,20 @@ def main(stdscr):
       if selection == "quit" or selection == "q":
           questionsAsked -= 1
           break
-      elif selection not in ["1", "2", "3", "4"]:
-          # Ignore bad input
-          line_num += 2
-          stdscr.addstr(line_num, 0, "Wrong :(", curses.color_pair(2))
-          line_num +=1
-          stdscr.addstr(line_num, 0 ,"{} - {}".format(currentWordDefs[correctChoice][1], currentWordDefs[correctChoice][2]))
-      elif (int(selection) - 1) == correctChoice:
-          line_num += 2
-          stdscr.addstr(line_num, 0 , "Correct!!", curses.color_pair(1))
-          line_num += 1
-          stdscr.addstr(line_num, 0 ,"{} - {}".format(currentWordDefs[correctChoice][1], currentWordDefs[correctChoice][2]))
-          correctAnswers += 1
-      else:
-          line_num += 2
-          stdscr.addstr(line_num, 0, "Wrong :(", curses.color_pair(2))
-          line_num += 1
-          stdscr.addstr(line_num, 0, "{} - {}".format(currentWordDefs[correctChoice][1], currentWordDefs[correctChoice][2]))
+      elif selection in ["1", "2", "3", "4"]:
+        if (int(selection) - 1) == correctChoice:
+            line_num += 2
+            stdscr.addstr(line_num, 0 , "Correct!!", curses.color_pair(1))
+            line_num += 1
+            stdscr.addstr(line_num, 0 ,"{} - {}".format(currentWordDefs[correctChoice][1], currentWordDefs[correctChoice][2]))
+            correctAnswers += 1
+        else:
+            line_num += 2
+            stdscr.addstr(line_num, 0 , "Wrong :(", curses.color_pair(2))
+            line_num += 1
+            stdscr.addstr(line_num, 0 ,"{} - {}".format(currentWordDefs[correctChoice][1], currentWordDefs[correctChoice][2]))
+            correctAnswers += 1
+
 
       line_num += 1
       stdscr.move(line_num, 0)
